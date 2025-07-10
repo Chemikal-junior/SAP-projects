@@ -1,4 +1,4 @@
-# SAP-projekts
+# SAP-projects
 
 This folder contains my projects that I created during my internship at SAP.
 
