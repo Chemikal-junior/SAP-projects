@@ -1,8 +1,8 @@
 # SAP-projects
 
-This folder contains my projects that I created during my internship at SAP.
+This folder contains my projects that I created during my practicum at SAP.
 
-## Projekts
+## Projects
 
 [Web application](./Web%20application/README.md)
 
