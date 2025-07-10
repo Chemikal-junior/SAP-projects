@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table preview</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div class="search-container">
+        <div class="table-header">
+            <div>
+                <h2>Search</h2>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+        <form id="search" action="/find" method="post" class="flex-form">
+            <div class="search-box">
+                <label for="travelId">Travel ID:</label>
+                <input type="search" id="travelId" name="travelId" placeholder="Search">
+            </div>
+            <div class="search-box">
+                <label for="agencyId">Agency ID:</label>
+                <input type="search" id="agencyId" name="agencyId" placeholder="Search">
+            </div>
+            <div class="search-box">
+                <label for="customerId">Customer ID:</label>
+                <input type="search" id="customerId" name="customerId" placeholder="Search">
+            </div>
+            <div class="search-box">
+                <label for="startingDate">Starting date:</label>
+                <input type="date" id="startingDate" name="startingDate" placeholder="Search">
+            </div>
+            <div class="search-box">
+                <label for="endDate">End date:</label>
+                <input type="date" id="endDate" name="endDate" placeholder="Search">
+            </div>
+            <div class="search-box" style="align-self: flex-end;"><input type="submit"></div>
+            <div class="filling"></div>
+            <div class="filling"></div>
+            <div class="filling"></div>
+            <div class="filling"></div>
+        </form>
+    </div>
+    <div class="table-container">
+        <div class="table-header">
+            <div>
+                <h2><%= name %></h2>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" name="select_all" /></th>
+                    <th>Travel ID</th>
+                    <th>Agency ID</th>
+                    <th>Customer ID</th>
+                    <th>Starting Date</th>
+                    <th>End Date</th>
+                    <th>Overall Status</th>
+                </tr>
+            </thead>
+            <tbody id="tabbody">
+                <% data.forEach(line => { %>
+                    <tr data-travelId="<%= line.travelId %>" data-agencyId="<%= line.agencyId %>" data-customerId="<%= line.customerId %>" data-startingDate="<%= line.startingDate %>" data-endDate="<%= line.endDate %>" data-bookingFee="<%= line.bookingFee %>" data-totalPrice="<%= line.totalPrice %>" data-currency="<%= line.currency %>" data-overallStatus="<%= {"o": "Opened", "a":"Accepted", "r":"Rejected"}[line.overallStatus] %>">
+                        <td><input type="checkbox" name="select_line" value="<%= line.travelId %>" /></td>
+                        <td><%= line.travelId %></td>
+                        <td><%= line.agencyId %></td>
+                        <td><%= line.customerId %></td>
+                        <td><%= line.startingDate %></td>
+                        <td><%= line.endDate %></td>
+                        <td><%= {"o": "Opened", "a":"Accepted", "r":"Rejected"}[line.overallStatus] %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <div class="search-container" id="travel-box" style="display: none;">
+        <div class="table-header">
+            <div>
+                <h2>Travel</h2>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+        <form id="travel" action="/find" method="post" class="flex-form">
+
+        </form>
+    </div>
+    <script>
+        var reload = function() {
+            document.innerHTML = document.innerHTML;
+
+            document.getElementById("search").addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData.entries());
+
+                const res = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                odpoved = await res.json();
+                console.log(odpoved);
+                if (res.ok) {
+                    formbody = document.getElementById("tabbody");
+                    formbody.innerHTML = "";
+                    odpoved.forEach(element => {
+                        formbody.innerHTML += `<tr data-travelId="${element.travelId}" data-agencyId="${element.agencyId}" data-customerId="${element.customerId}" data-startingDate="${element.startingDate}" data-endDate="${element.endDate}" data-bookingFee="${element.bookingFee}" data-totalPrice="${element.totalPrice}" data-currency="${element.currency}" data-overallStatus="${{"o": "Opened", "a":"Accepted", "r":"Rejected"}[element.overallStatus]}">
+                        <td><input type="checkbox" name="select_line" value="${element.travelId}" /></td>
+                        <td>${element.travelId}</td>
+                        <td>${element.agencyId}</td>
+                        <td>${element.customerId}</td>
+                        <td>${element.startingDate}</td>
+                        <td>${element.endDate}</td>
+                        <td>${{"o": "Opened", "a":"Accepted", "r":"Rejected"}[element.overallStatus]}</td></tr>`;
+                    });
+                    reload();
+                } else {
+                    alert(odpoved.err);
+                }
+            });
+            document.querySelectorAll("tbody > tr").forEach(tag => {tag.addEventListener("click", (e) => {
+                var el = document.getElementById("travel");
+                var text = "";
+                var obj = {
+                    "travelid": "Travel ID:",
+                    "agencyid": "Agency ID:",
+                    "customerid": "Customer ID:",
+                    "startingdate": "Starting date:",
+                    "enddate": "End date:",
+                    "bookingfee": "Booking fee:",
+                    "totalprice": "Total price:",
+                    "currency": "Currency:",
+                    "overallstatus": "Overall status:"
+                };
+
+                Object.entries({...e.target.parentNode.dataset}).forEach(([key, value]) => {
+                    text += `<div class="search-box">
+                    <label for="${key}">${obj[key]}</label>
+                    <p>${value && value != "null" ? value : "---"}</p>
+                </div>`;
+                });
+
+                el.innerHTML = text + `<div class="filling"></div>
+                <div class="filling"></div>
+                <div class="filling"></div>
+                <div class="filling"></div>
+                <div class="filling"></div>
+                <div class="filling"></div>
+                <div class="filling"></div>`;
+
+                document.getElementById("travel-box").style = "";
+            })});
+        }
+
+        reload();
+    </script>
+</body>
+</html>

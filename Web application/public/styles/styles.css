@@ -1,0 +1,136 @@
+body {
+    padding: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+}
+
+.table-container, .search-container {
+    max-width: 1000px;
+    margin: 25px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    font-size: 16px;
+    width: 100%;
+    text-align: left;
+}
+
+.styled-table thead tr, .table-header {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-child(2n) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+
+
+
+.table-header {
+    padding: 15px 20px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.table-header > div {
+    display: flex;
+    gap: 15px;
+}
+
+h2 {
+    margin: 0;
+}
+
+
+
+.flex-form {
+    margin: 10px;
+    padding: 10px;
+    padding-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: center;
+}
+
+form > div {
+    padding: 5px;
+    flex-basis: 153px;
+    max-width: 300px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #666666;
+}
+
+input[type="search"],
+input[type="date"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #009879;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
+
+input[type="submit"] {
+    padding: 12px;
+    background-color: #009879;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #006652;
+}
+
+.search-box {
+    flex-grow: 1;
+    flex-shrink: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.filling {
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+
