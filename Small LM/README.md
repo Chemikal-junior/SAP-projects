@@ -15,7 +15,7 @@ To train LM, use Python to run [training.py](./training.py). LM will be saved in
 python training.py
 ```
 
-To generete some text, run [generate.py](./generete.py).
+To generete some text, run [generate.py](./generate.py).
 
 ```bash
 python generate.py
